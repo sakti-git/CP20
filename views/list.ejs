@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../public/MyStyle.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Challenge 20</title>
+</head>
+
+<body>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+    <form method="GET" style="padding-inline: 50px;">
+        <div class="container">
+            <div>
+                <h2>B.R.E.A.D (Browse, Read, Edit, Add, Delete)</h2>
+                <h3>Filters</h3>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" id="id" name="checkId">
+                        <label class="form-check-label" for="id">
+                            ID
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="id" class="form-control" id="id" placeholder="ID">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" id="string" name="checkString">
+                        <label class="form-check-label" for="string">
+                            String
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="string" class="form-control" id="string" placeholder="String">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" id="integer" name="checkInteger">
+                        <label class="form-check-label" for="integer">
+                            Integer
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="integer" class="form-control" id="integer" placeholder="Integer">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" id="float" name="checkFloat">
+                        <label class="form-check-label" for="float">
+                            Float
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="float" class="form-control" id="float" placeholder="Float">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" id="date" name="checkDate">
+                        <label class="form-check-label" for="date">
+                            Date
+                        </label>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="date" name="startDate" class="form-control" id="date">
+                    </div>
+                </div>
+                <div class="w-100"></div>
+                <p class="col offset-2">to</p>
+                <div class="w-100"></div>
+                <div class="col-3 offset-2">
+                    <div class="form-group">
+                        <input type="date" name="endDate" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="true" id="boolean" name="checkBoolean">
+                        <label class="form-check-label" for="boolean">
+                            Boolean
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <select name="boolean" id="boolean" class="custom-select custom-select">
+                            <option selected>Choose the boolean ...</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button></br>
+
+            <div class="container" style="padding-top: 20px;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>String</th>
+                            <th>Integer</th>
+                            <th>Float</th>
+                            <th>Date</th>
+                            <th>Boolean</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% data.forEach(item => {%>
+                        <tr>
+                            <td><%= item.id %></td>
+                            <td><%= item.string ? item.string : "Empty" %></td>
+                            <td><%= item.integer ? item.integer : "Empty" %></td>
+                            <td><%= item.float ? item.float : "Empty" %></td>
+                            <td><%= item.date ? item.date : "Empty" %></td>
+                            <td><%= item.boolean ? item.boolean : "Empty" %></td>
+                            <td>
+                                <a class="btn btn-success" href="edit/<%= item.id %>">Edit</a>
+                                <a class="btn btn-danger" href="delete/<%= item.id %>">Delete</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <a href="add" class="btn btn-primary">Add</a>
+        </div>
+    </form>
+
+
+
+</body>
+
+</html>

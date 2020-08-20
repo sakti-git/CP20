@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../public/MyStyle.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Edit Menu</title>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <form action="edit" method="POST" style="padding-inline: 50px;">
+        <div class="container">
+
+            <div>
+                <h2>Edit Data</h2>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <label class="form-check-label" for="id">
+                            ID
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="id" class="form-control" id="id" value="<%= row.id %>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <label class="form-check-label" for="string">
+                            String
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="string" class="form-control" id="string" placeholder="<%= row.string %>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <label class="form-check-label" for="integer">
+                            Integer
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="integer" class="form-control" id="integer" placeholder="<%= row.integer %>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <label class="form-check-label" for="float">
+                            Float
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" name="float" class="form-control" id="float" placeholder="<%= row.float %>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <label class="form-check-label" for="date">
+                            Date
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="date" name="date" class="form-control" id="date" value="<%= row.date %>">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-check">
+                        <label class="form-check-label" for="boolean">
+                            Boolean
+                        </label>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="form-group">
+                        <select name="boolean" id="boolean" class="custom-select custom-select" value="<%= row.boolean %>">
+                            <option selected>Choose the boolean ...</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="button" value="Update">
+        </div>
+    </form>
+
+</body>
+
+</html>
