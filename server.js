@@ -73,17 +73,15 @@ app.get('/edit/:id', (req, res) => {
 })
 
 app.post('/edit/:id', (req, res) => {
-    let id = (req.body.id) - 1;
-    let edit = [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean, id]
-    let sql = `UPDATE test SET string = ? , integer = ? , float = ? , date = ? , boolean = ? WHERE id = ?`
-
-    db.run(sql, edit, (err) => {
-        if (err) {
-            return console.error(err.message);
-        }
-        console.log(edit);
-        res.redirect('/');
-    })
+    let id = req.body.id;
+        let edit = [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean, id]
+        let sql = `UPDATE test SET string = ? , integer = ? , float = ? , date = ? , boolean = ? WHERE id = ?`
+        db.run(sql, edit, (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            res.redirect('/');
+        })
 });
 
 app.listen(3000, () => {
