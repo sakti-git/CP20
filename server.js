@@ -14,18 +14,70 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
+    //let {id, string, integer, float, startDate, endDate, boolean} = req.body;
+    let params = [];
+    let search = false;
+
+    if (req.query.checkId && req.query.id) {
+        params.push(`id = ${req.query.id}`);
+        search = true;
+    }
+
+    if (req.query.checkString && req.query.string) {
+        params.push(`string = ${req.query.string}`);
+        search = true;
+    }
+
+    if (req.query.checkInteger && req.query.integer) {
+        params.push(`integer = ${req.query.integer}`);
+        search = true;
+    }
+
+    if (req.query.checkFloat && req.query.float) {
+        params.push(`float = ${req.query.float}`);
+        search = true;
+    }
+
+    if (req.query.checkDate && req.query.startDate && req.query.endDate) {
+        params.push(`date BETWEEN '${req.query.startDate}' AND '${req.query.endDate}`);
+        search = true;
+    }
+
+    if (req.query.checkBoolean && req.query.boolean) {
+        params.push(`boolean = ${req.query.boolean}`);
+        search = true;
+    }
+
+    let buttonSearch = ""
+    if (search) {
+        buttonSearch += `WHERE ${params.join(' AND ')}`
+    }
+
+    const page = req.query.page || 1;
+    const limit = 3;
+    const offset = (page - 1) * limit;
     const result = req.body;
     db.serialize(() => {
-        const sql = "SELECT * FROM test";
+        let sql = "SELECT count(id) as total FROM test";
         db.all(sql, (err, rows) => {
             if (err) throw err;
 
             if (rows) {
-                let data = [];
-                rows.forEach(result => {
-                    data.push(result);
-                });
-                res.render('list', { data });
+                const total = rows[0].total;
+                const pages = Math.ceil(total / limit);
+
+                sql = `SELECT * FROM test ${buttonSearch} limit ? offset ?`;
+                db.all(sql, [limit, offset], (err, rows) => {
+                    if (err) throw err;
+                    if (rows) {
+                        let data = [];
+                        rows.forEach(result => {
+                            data.push(result);
+                        });
+                        res.render('list', { data, page, pages });
+                    }
+                })
+                
             } else {
                 console.log("No result");
             }
@@ -74,14 +126,14 @@ app.get('/edit/:id', (req, res) => {
 
 app.post('/edit/:id', (req, res) => {
     let id = req.body.id;
-        let edit = [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean, id]
-        let sql = `UPDATE test SET string = ? , integer = ? , float = ? , date = ? , boolean = ? WHERE id = ?`
-        db.run(sql, edit, (err) => {
-            if (err) {
-                return console.error(err.message);
-            }
-            res.redirect('/');
-        })
+    let edit = [req.body.string, req.body.integer, req.body.float, req.body.date, req.body.boolean, id]
+    let sql = `UPDATE test SET string = ? , integer = ? , float = ? , date = ? , boolean = ? WHERE id = ?`
+    db.run(sql, edit, (err) => {
+        if (err) {
+            return console.error(err.message);
+        }
+        res.redirect('/');
+    })
 });
 
 app.listen(3000, () => {
