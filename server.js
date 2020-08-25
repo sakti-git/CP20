@@ -14,7 +14,6 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    //let {id, string, integer, float, startDate, endDate, boolean} = req.body;
     let params = [];
     let search = false;
 
@@ -24,52 +23,57 @@ app.get('/', (req, res) => {
     }
 
     if (req.query.checkString && req.query.string) {
-        params.push(`string = ${req.query.string}`);
+        params.push(`string = "${req.query.string}"`);
         search = true;
     }
 
     if (req.query.checkInteger && req.query.integer) {
-        params.push(`integer = ${req.query.integer}`);
+        params.push(`integer = "${req.query.integer}"`);
         search = true;
     }
 
     if (req.query.checkFloat && req.query.float) {
-        params.push(`float = ${req.query.float}`);
+        params.push(`float = "${req.query.float}"`);
         search = true;
     }
 
     if (req.query.checkDate && req.query.startDate && req.query.endDate) {
-        params.push(`date BETWEEN '${req.query.startDate}' AND '${req.query.endDate}`);
+        params.push(`date BETWEEN "${req.query.startDate}" AND "${req.query.endDate}"`);
         search = true;
     }
 
     if (req.query.checkBoolean && req.query.boolean) {
-        params.push(`boolean = ${req.query.boolean}`);
+        params.push(`boolean = "${req.query.boolean}"`);
         search = true;
     }
 
-    let buttonSearch = ""
+    let dataSearch = ""
     if (search) {
-        buttonSearch += `WHERE ${params.join(' AND ')}`
+        dataSearch += `WHERE ${params.join(' AND ')}`
     }
 
     const page = req.query.page || 1;
     const limit = 3;
     const offset = (page - 1) * limit;
-    const result = req.body;
-    db.serialize(() => {
-        let sql = "SELECT count(id) as total FROM test";
-        db.all(sql, (err, rows) => {
-            if (err) throw err;
 
-            if (rows) {
+    //db.serialize(() => {
+        let sql = "SELECT COUNT(id) AS total FROM test";
+        db.all(sql, (err, rows) => {
+            if (err) {
+                return res.send(err);
+            } else if (rows == 0) {
+                return res.send('Sorry, data not found')
+            } else {
                 const total = rows[0].total;
                 const pages = Math.ceil(total / limit);
 
-                sql = `SELECT * FROM test ${buttonSearch} limit ? offset ?`;
+                sql = `SELECT * FROM test ${dataSearch} LIMIT ? OFFSET ?`;
                 db.all(sql, [limit, offset], (err, rows) => {
-                    if (err) throw err;
-                    if (rows) {
+                    if (err) {
+                        return res.send(err);
+                    } else if (rows == 0) {
+                        return res.send('Sorry, data not found')
+                    } else {
                         let data = [];
                         rows.forEach(result => {
                             data.push(result);
@@ -77,12 +81,11 @@ app.get('/', (req, res) => {
                         res.render('list', { data, page, pages });
                     }
                 })
-                
-            } else {
-                console.log("No result");
+
             }
-        });
-    });
+        })
+    //})
+
 });
 
 
